@@ -18,9 +18,19 @@ header {
 }
 
 nav {
-  background-color: #ffffff;
+  background-color: #becdbd;
   padding: 10px 40px;
-  text-align: center;
+  text-align: left;
+}
+
+nav ul {
+  list-style: none;      
+  padding: 0;
+  margin: 0;
+  display: flex; 
+  flex-wrap: wrap;        
+  justify-content: left; 
+  gap: 20px;             
 }
 
 nav a {
@@ -92,6 +102,44 @@ img {
   margin-bottom: 16px;
 }
 
+#search-bar {
+    text-align: center;
+    margin: 20px 0;
+}
+
+#recipe-search {
+    width: 80%;
+    max-width: 400px;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+#search-cuisine ul {
+    list-style: none;          
+    padding: 0;
+    margin: 0;
+    display: flex; 
+    flex-wrap: wrap;
+    gap: 10px;       
+    justify-content: center;   
+}
+
+#search-cuisine a {
+    display: block;            
+    padding: 10px 20px;       
+    background-color: #266928; 
+    color: white;           
+    text-decoration: none;   
+    border-radius: 5px;      
+    font-family: monospace, serif;
+}
+
+#search-cuisine a:hover {
+    background-color: #004d24;
+}
+
 #members img {
   border-radius: 50%;
   border: 3px solid #004d24;
@@ -101,7 +149,7 @@ img {
   object-fit: cover;
 }
 
-/* ── Links ── */
+/* -- Links -- */
 a:link {
   color: #9f2042;
   text-decoration: underline;
@@ -131,12 +179,14 @@ a:hover {
 #members,
 #popular-recipes,
 #recipes-by-cuisine,
-#search-cuisine,
 #chinese,
 #japanese,
 #korean,
 #thai,
-#vietnamese {
+#vietnamese,
+#directions,
+#ingredients,
+#description {
   border: 2px solid #494949;
   border-radius: 30px;
   padding: 20px;
@@ -148,9 +198,12 @@ a:hover {
 #mission:hover,
 #members:hover,
 #popular-recipes:hover,
-#recipes-by-cuisine:hover {
+#recipes-by-cuisine:hover,
+#directions:hover,
+#ingredients:hover,
+#description:hover {
   transform: scale(1.02);
-  background-color: #bbaca0;
+  background-color: #dfd4cc;
 }
 
 article {
