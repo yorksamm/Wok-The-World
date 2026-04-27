@@ -1,4 +1,3 @@
-// ── Header fade-in + easter egg ────────────────────────────────────────────
 const header = document.querySelector("header h1"); // declared ONCE
 
 if (header) {
@@ -14,14 +13,10 @@ if (header) {
     });
 }
 
-
-// ── Dark mode on double click ──────────────────────────────────────────────
 document.body.addEventListener("dblclick", () => {
     document.body.classList.toggle("dark-mode");
 });
 
-
-// ── Back to Top button ─────────────────────────────────────────────────────
 const backToTop = document.createElement("button");
 backToTop.textContent = "↑ Back to Top";
 backToTop.style.cssText = `
@@ -48,21 +43,3 @@ window.addEventListener("scroll", () => {
 backToTop.addEventListener("click", () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
 });
-
-
-// ── Visitor counter ────────────────────────────────────────────────────────
-let visits = localStorage.getItem("aboutVisits");
-visits = visits ? parseInt(visits) + 1 : 1;
-localStorage.setItem("aboutVisits", visits);
-
-const counter = document.createElement("p");
-counter.textContent = `👀 This page has been visited ${visits} time${visits > 1 ? "s" : ""}.`;
-counter.style.cssText = `
-    text-align: center;
-    color: #888;
-    font-size: 0.85rem;
-    margin: 20px 0;
-`;
-
-const main = document.querySelector("main");
-if (main) main.appendChild(counter);
