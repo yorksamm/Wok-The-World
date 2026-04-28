@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Example Recipe</title>
+    <title>Recipe - Wok the World</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 
@@ -18,39 +18,56 @@
 </nav>
 
 <header>
-    <h1>Recipe Name</h1>
+    <h1 id="recipe-title">Recipe Name</h1>
 </header>
 
 <main>
 
 <section id="description">
     <h2>Description</h2>
-    <p>
+    <p id="recipe-desc">
         This is where a description of the recipe would be. This includes any personal anecdotes or origins of the dish.
     </p>
 </section>
 
 <section id="ingredients">
     <h2>Ingredients</h2>
-    <ul>
-        <li>Ingredient 1</li>
-        <li>Ingredient 2</li>
-        <li>Ingredient 3</li>
-    </ul>
+    <p id="recipe-ingredients">
+        Ingredients will be displayed here.
+    </p>
 </section>
 
 <section id="directions">
     <h2>Directions</h2>
-    <ul>
-        <li>Step 1</li>
-        <li>Step 2</li>
-        <li>Step 3</li>
-    </ul>
+    <p id="recipe-directions">
+        Directions will be displayed here.
+    </p>
 </section>
 
 </main>
 
+    <script src="recipes.js"></script>
     <script src="userSurprise.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Get recipe ID from URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const recipeId = parseInt(urlParams.get('id'));
+            
+            if (typeof recipes !== 'undefined') {
+                const recipe = recipes.find(r => r.id === recipeId);
+                
+                if (recipe) {
+                    document.getElementById('recipe-title').textContent = recipe.recipeName;
+                    document.getElementById('recipe-desc').textContent = recipe.recipeDesc;
+                    document.getElementById('recipe-ingredients').textContent = recipe.recipeIngredients;
+                    document.getElementById('recipe-directions').textContent = recipe.recipeDirections;
+                } else {
+                    document.getElementById('recipe-title').textContent = 'Recipe Not Found';
+                }
+            }
+        });
+    </script>
 
 </body>
 </html>

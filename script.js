@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeFormBtn = document.getElementById('closeForm');
     const recipeForm = document.getElementById('recipeForm');
     const recipeList = document.getElementById('recipeList');
+    const popularList = document.getElementById('popular-list');
 
     if (openFormBtn) {
         openFormBtn.onclick = () => recipeModal.style.display = 'flex';
@@ -35,6 +36,48 @@ document.addEventListener('DOMContentLoaded', () => {
     const savedRecipes = JSON.parse(localStorage.getItem('myRecipes')) || [];
     if (recipeList) {
         savedRecipes.forEach(recipe => displayRecipe(recipe));
+    }
+
+    //display popular recipes aka first 3 recipes
+    if (popularList && typeof recipes !== "undefined") {
+        popularList.innerHTML = '';
+        const popularRecipes = recipes.slice(0, 3); // First 3 recipes
+        popularRecipes.forEach(recipe => {
+            const li = document.createElement('li');
+            const link = document.createElement('a');
+            link.href = `recipe.html?id=${recipe.id}`;
+            link.textContent = recipe.recipeName;
+            li.appendChild(link);
+            popularList.appendChild(li);
+        });
+        
+        // Add "See More" link
+        const seeLi = document.createElement('li');
+        const seeLink = document.createElement('a');
+        seeLink.href = 'search.html';
+        seeLink.textContent = 'See More';
+        seeLi.appendChild(seeLink);
+        popularList.appendChild(seeLi);
+    }
+
+    // Display recipes by cuisine in search.html
+    if (typeof recipes !== "undefined") {
+        const cuisines = ['Chinese', 'Japanese', 'Korean', 'Thai', 'Vietnamese'];
+        cuisines.forEach(cuisine => {
+            const cuisineId = cuisine.toLowerCase() + '-recipes';
+            const cuisineList = document.getElementById(cuisineId);
+            if (cuisineList) {
+                const cuisineRecipes = recipes.filter(r => r.recipeCuisine === cuisine);
+                cuisineRecipes.forEach(recipe => {
+                    const li = document.createElement('li');
+                    const link = document.createElement('a');
+                    link.href = `recipe.html?id=${recipe.id}`;
+                    link.textContent = recipe.recipeName;
+                    li.appendChild(link);
+                    cuisineList.appendChild(li);
+                });
+            }
+        });
     }
 
     if (recipeForm) {
