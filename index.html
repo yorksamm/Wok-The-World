@@ -22,7 +22,6 @@
 </header>
 
 <main>
-
 <section id="popular-recipes">
     <h2>Popular Recipes</h2>
     <ul>
@@ -44,10 +43,51 @@
         <li><a href="search.html">See More</a></li>
     </ul>
 </section>
-
 </main>
 
+<div id="addRecipe">
+    <button id="openForm">Share a Recipe</button>
+</div>
+
+<div id="recipeModal" class="form-overlay">
+    <div class="form-content">
+        <span class="closeForm" id="closeForm">X</span>
+        <h2>Share Your Recipe</h2>
+        <form id="recipeForm">
+            <div class="form-group">
+                <label for="recipeName">Recipe Name:</label>
+                <input type="text" id="recipeName" required>
+            </div>
+            <div class="form-group">
+                <label for="recipeCuisine">Cuisine:</label>
+                <select id="recipeCuisine">
+                    <option value="Chinese">Chinese</option>
+                    <option value="Japanese">Japanese</option>
+                    <option value="Korean">Korean</option>
+                    <option value="Thai">Thai</option>
+                    <option value="Vietnamese">Vietnamese</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="recipeDesc">Short Description:</label>
+                <textarea id="recipeDesc" rows="2" required placeholder="A family favorite for when..."></textarea>
+            </div>
+            <div class="form-group">
+                <label for="recipeIngredients">Ingredients:</label>
+                <textarea id="recipeIngredients" rows="4" required placeholder="Enter ingredients..."></textarea>
+            </div>
+            <div class="form-group">
+                <label for="recipeDirections">Directions:</label>
+                <textarea id="recipeDirections" rows="4" required placeholder="Step 1, Step 2..."></textarea>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="submit-btn">Share Recipe</button>
+                <button type="reset" class="reset-btn">Clear</button>
+            </div>
+        </form>
+    </div>
+</div>
+    <script src="script.js"></script>
     <script src="userSurprise.js"></script>
-    
 </body>
 </html>
