@@ -13,6 +13,63 @@ document.addEventListener('DOMContentLoaded', () => {
         closeFormBtn.onclick = () => recipeModal.style.display = 'none';
     }
 
+    function showError(fieldId, message) {
+        const field = document.getElementById(fieldId);
+        const existing = document.getElementById(fieldId + '-error');
+        if (existing) existing.remove();
+
+        const errorSpan = document.createElement('span');
+        errorSpan.id = fieldId + '-error';
+        errorSpan.textContent = message;
+        errorSpan.style.color = 'red';
+        errorSpan.style.fontSize = '0.85em';
+        errorSpan.style.display = 'block';
+        field.insertAdjacentElement('afterend', errorSpan);
+    }
+
+    function clearError(fieldId) {
+        const existing = document.getElementById(fieldId + '-error');
+        if (existing) existing.remove();
+    }
+
+    function clearAllErrors() {
+        ['recipeName','recipeCuisine','recipeDesc','recipeIngredients','recipeDirections']
+            .forEach(id => clearError(id));
+    }
+
+    if (recipeForm) {
+        document.getElementById('recipeName').addEventListener('blur', () => {
+            const v = document.getElementById('recipeName').value.trim();
+            if (!v) showError('recipeName', 'Recipe name is required.');
+            else if (v.length < 3) showError('recipeName', 'Name must be at least 3 characters.');
+            else clearError('recipeName');
+        });
+
+        document.getElementById('recipeCuisine').addEventListener('blur', () => {
+            const v = document.getElementById('recipeCuisine').value.trim();
+            if (!v) showError('recipeCuisine', 'Please select a cuisine.');
+            else clearError('recipeCuisine');
+        });
+
+        document.getElementById('recipeDesc').addEventListener('blur', () => {
+            const v = document.getElementById('recipeDesc').value.trim();
+            if (!v || v.length < 10) showError('recipeDesc', 'Description must be at least 10 characters.');
+            else clearError('recipeDesc');
+        });
+
+        document.getElementById('recipeIngredients').addEventListener('blur', () => {
+            const v = document.getElementById('recipeIngredients').value.trim();
+            if (!v || v.length < 10) showError('recipeIngredients', 'Please enter more detail for ingredients.');
+            else clearError('recipeIngredients');
+        });
+
+        document.getElementById('recipeDirections').addEventListener('blur', () => {
+            const v = document.getElementById('recipeDirections').value.trim();
+            if (!v || v.length < 20) showError('recipeDirections', 'Directions must be at least 20 characters.');
+            else clearError('recipeDirections');
+        });
+    }
+
     function displayRecipe(recipe) {
         if (!recipeList) return;
         const listItem = document.createElement('li');
@@ -83,13 +140,42 @@ document.addEventListener('DOMContentLoaded', () => {
     if (recipeForm) {
         recipeForm.addEventListener('submit', (event) => {
             event.preventDefault();
+            clearAllErrors(); 
+
+            const name = document.getElementById('recipeName').value.trim();
+            const cuisine = document.getElementById('recipeCuisine').value.trim();
+            const desc = document.getElementById('recipeDesc').value.trim();
+            const ingredients = document.getElementById('recipeIngredients').value.trim();
+            const directions = document.getElementById('recipeDirections').value.trim();
+
+            let hasErrors = false;
+            if (!name || name.length < 3) { 
+                showError('recipeName', 'Recipe name must be at least 3 characters.'); 
+                hasErrors = true; }
+            if (!cuisine) { 
+                showError('recipeCuisine', 'Please select a cuisine.'); 
+                hasErrors = true; }
+            if (!desc || desc.length < 10) { 
+                showError('recipeDesc', 'Description must be at least 10 characters.'); 
+                hasErrors = true; }
+            if (!ingredients || ingredients.length < 10) { 
+                showError('recipeIngredients', 'Please enter more detail for ingredients.'); 
+                hasErrors = true; }
+            if (!directions || directions.length < 20) { 
+                showError('recipeDirections', 'Directions must be at least 20 characters.'); 
+                hasErrors = true; }
+
+            if (hasErrors) return; 
+
+            const submitBtn = recipeForm.querySelector('[type="submit"]');
+            if (submitBtn) submitBtn.disabled = true;
 
             const newRecipe = {
-                recipeName: document.getElementById('recipeName').value,
-                recipeCuisine: document.getElementById('recipeCuisine').value,
-                recipeIngredients: document.getElementById('recipeIngredients').value,
-                recipeDirections: document.getElementById('recipeDirections').value,
-                recipeDesc: document.getElementById('recipeDesc').value
+                recipeName: name,
+                recipeCuisine: cuisine,
+                recipeIngredients: ingredients,
+                recipeDirections: directions,
+                recipeDesc: desc
             };
 
             const updatedRecipes = JSON.parse(localStorage.getItem('myRecipes')) || [];
@@ -98,8 +184,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
             alert("Recipe shared successfully!");
             recipeForm.reset();
+            clearAllErrors(); 
             recipeModal.style.display = 'none';
-            
+            if (submitBtn) submitBtn.disabled = false; 
+
             if (recipeList) {
                 displayRecipe(newRecipe);
             }
