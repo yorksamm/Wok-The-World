@@ -194,3 +194,45 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+//search bar
+const searchInput = document.getElementById("recipe-search");
+
+if (searchInput && typeof recipes !== "undefined") {
+    searchInput.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+            event.preventDefault(); 
+
+            const query = searchInput.value.toLowerCase().trim();
+            if (!query) return;
+            const match = recipes.find(r =>
+                r.recipeName.toLowerCase().includes(query)
+            );
+
+            if (match) {
+                const allListItems = document.querySelectorAll("li");
+
+                let targetElement = null;
+
+                allListItems.forEach(li => {
+                    if (li.textContent.toLowerCase().includes(match.recipeName.toLowerCase())) {
+                        targetElement = li;
+                    }
+                });
+
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: "smooth",
+                        block: "center"
+                    });
+
+                    // highlight effect
+                    targetElement.style.backgroundColor = "#ffff99";
+                    setTimeout(() => {
+                        targetElement.style.backgroundColor = "";
+                    }, 1500);
+                }
+            }
+        }
+    });
+}
