@@ -79,14 +79,36 @@ document.addEventListener('DOMContentLoaded', () => {
         listItem.style.marginBottom = "20px";
         listItem.style.backgroundColor = "#fff";
 
-        listItem.innerHTML = `
-            <h3>${recipe.recipeName} (${recipe.recipeCuisine})</h3>
-            <p><em>${recipe.recipeDesc}</em></p>
-            <h4>Ingredients</h4>
-            <p>${recipe.recipeIngredients}</p>
-            <h4>Directions</h4>
-            <p>${recipe.recipeDirections}</p>
-        `;
+        // Create elements safely to prevent XSS - use textContent instead of innerHTML
+        const h3 = document.createElement('h3');
+        h3.textContent = `${recipe.recipeName} (${recipe.recipeCuisine})`;
+        listItem.appendChild(h3);
+
+        const descLabel = document.createElement('h4');
+        descLabel.textContent = 'Description';
+        listItem.appendChild(descLabel);
+
+        const descPara = document.createElement('p');
+        descPara.style.fontStyle = 'italic';
+        descPara.textContent = recipe.recipeDesc;
+        listItem.appendChild(descPara);
+
+        const ingredLabel = document.createElement('h4');
+        ingredLabel.textContent = 'Ingredients';
+        listItem.appendChild(ingredLabel);
+
+        const ingredPara = document.createElement('p');
+        ingredPara.textContent = recipe.recipeIngredients;
+        listItem.appendChild(ingredPara);
+
+        const dirLabel = document.createElement('h4');
+        dirLabel.textContent = 'Directions';
+        listItem.appendChild(dirLabel);
+
+        const dirPara = document.createElement('p');
+        dirPara.textContent = recipe.recipeDirections;
+        listItem.appendChild(dirPara);
+
         recipeList.appendChild(listItem);
     }
 
