@@ -1,2 +1,2 @@
 # Wok the World
-#project for cs146
+project for cs146
