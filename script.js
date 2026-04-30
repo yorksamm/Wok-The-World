@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         document.getElementById('recipeDirections').addEventListener('blur', () => {
             const v = document.getElementById('recipeDirections').value.trim();
-            if (!v || v.length < 20) showError('recipeDirections', 'Directions must be at least 20 characters.');
+            if (!v || v.length < 10) showError('recipeDirections', 'Directions must be at least 10 characters.');
             else clearError('recipeDirections');
         });
     }
@@ -183,8 +183,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!ingredients || ingredients.length < 10) { 
                 showError('recipeIngredients', 'Please enter more detail for ingredients.'); 
                 hasErrors = true; }
-            if (!directions || directions.length < 20) { 
-                showError('recipeDirections', 'Directions must be at least 20 characters.'); 
+            if (!directions || directions.length < 10) { 
+                showError('recipeDirections', 'Directions must be at least 10 characters.'); 
                 hasErrors = true; }
 
             if (hasErrors) return; 
