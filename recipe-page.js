@@ -1,5 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Get recipe ID from URL
+    //Prompt in Claude: Extract the recipe ID from the URL query parameters and 
+    // use it to find the corresponding recipe in the recipes array. Then, populate the recipe 
+    // details on the page.
     const urlParams = new URLSearchParams(window.location.search);
     const recipeId = parseInt(urlParams.get('id'));
     
